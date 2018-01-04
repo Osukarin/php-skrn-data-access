@@ -2,12 +2,12 @@
 
 Es una libreria que permite la coneccion a una base de datos y ejecutar transacciones y consultas, permite mapear automáticamente las tablas de una base de datos a un objeto y realizar operaciones transaccionales.
 
-#Diseño de base de datos
+# Diseño de base de datos
 
 Para utilizar al máximo las capacidades de este API, es necesario apegarse a ciertos estándares que se describen a continuación:
 
-⋅⋅* Una tabla que utiliza una llave primaria autoincremental debe llevar como nombre "id"
-⋅⋅* Si una tabla tiene una llave compuesta, deben estar marcadas como llaves primarias o tener un índice tipo UNIQUE
+* Una tabla que utiliza una llave primaria autoincremental debe llevar como nombre "id"
+* Si una tabla tiene una llave compuesta, deben estar marcadas como llaves primarias o tener un índice tipo UNIQUE
 
 Para la ejemplificación del uso del API se usará la tabla
 
@@ -23,11 +23,11 @@ CREATE TABLE `persona` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
-#Configuración
+# Configuración
 
 Se debe configurar los parámetros de la base de datos para poder acceder a ella.
 
-##Transacciones
+## Transacciones
 
 Se debe crear una clase que extienda del objeto MyBDItem
 
@@ -51,7 +51,7 @@ class TItem extends MyBDItem{
 
 Dentro de ella se configuran los parámetros mostrados en el ejemplo anterior.
 
-###Insertar
+### Insertar
 
 Para insertar un registro se crea un objeto TItem y se envía la tabla sobre la cual se hará la operación.
 
@@ -114,7 +114,7 @@ $id = $item->insert($_GET);
 
 Si fuera una tabla que no tiene llave primaria autoincremental, el método insert retorna true si se insertó correctamente.
 
-###Actualizar
+### Actualizar
 
 Para actualizar un registro se crea un objeto TItem y se envía la tabla sobre la cual se hará la operación.
 
@@ -171,7 +171,7 @@ $item->update($_GET);
 
 Al actualizar no importa si la llave primaria es autoincremental o no, no se generará ni un identificador, solamente retornará true.
 
-###Eliminar
+### Eliminar
 
 Para actualizar un registro se crea un objeto TItem y se envía la tabla sobre la cual se hará la operación.
 
