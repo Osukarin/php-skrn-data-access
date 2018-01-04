@@ -19,6 +19,7 @@ CREATE TABLE `persona` (
   `apellido` varchar(45) NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `estatura` decimal(2,2) DEFAULT NULL,
+  `estado` varchar(1) DEFAULT NULL
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
@@ -128,7 +129,7 @@ Se asignan valores a atributos del objeto, hay que recordar que en PHP se pueden
 ```php
 <?php
 $item = new TItem('persona');
-$item-id = 1;
+$item->id = 1;
 $item->nombre = "Mengano";
 $item->apellido = "Ramirez";
 $item->fecha_nacimiento = "1985-09-02";
@@ -139,7 +140,7 @@ Una vez llenados los campos, se ejecuta el método para actualizar
 ```php
 <?php
 $item = new TItem('persona');
-$item-id = 1;
+$item->id = 1;
 $item->nombre = "Mengano";
 $item->apellido = "Ramirez";
 $item->fecha_nacimiento = "1985-09-02";
@@ -185,7 +186,7 @@ Para eliminar solamente se debe enviar las llaves primarias del registro, hay qu
 ```php
 <?php
 $item = new TItem('persona');
-$item-id = 1;
+$item->id = 1;
 ```
 
 Una vez llenados los campos, se ejecuta el método para eliminar
@@ -193,7 +194,7 @@ Una vez llenados los campos, se ejecuta el método para eliminar
 ```php
 <?php
 $item = new TItem('persona');
-$item-id = 1;
+$item->id = 1;
 $item->delete();
 ```
 
@@ -219,4 +220,68 @@ $item->delete($_GET);
 
 Al eliminar no importa si la llave primaria es autoincremental o no, no se generará ni un identificador, solamente retornará true.
 
+### Cargar
 
+Para cargar un registro se crea un objeto TItem y se envía la tabla sobre la cual se hará la operación.
+
+```php
+<?php
+$item = new TItem('persona');
+```
+
+Para cargar solamente se debe enviar las llaves primarias del registro, hay que recordar que en PHP se pueden crear atributos dinámicamente, no es necesario declararlos dentro del objeto.
+
+```php
+<?php
+$item = new TItem('persona');
+$item->id = 1;
+```
+
+Una vez llenados los campos, se ejecuta el método para cargar
+
+```php
+<?php
+$item = new TItem('persona');
+$item->id = 1;
+$item->load();
+```
+
+Otro modo de cargar es enviando un arreglo con la información, solo es necesario enviar la llave primaria del registro
+
+```php
+<?php
+
+$datos = ["id" => 1];
+
+$item = new TItem('persona');
+$item->load($datos);
+```
+
+Esto es particularmente útil cuando se reciben datos por medio de los request GET y POST, ya que por ser arreglos, se pueden enviar directamente al objeto transaccional:
+
+```php
+<?php
+
+$item = new TItem('persona');
+$item->load($_GET);
+```
+
+Al cargar un objeto, el método retorna un arreglo con los datos correspondientes al registro
+
+```php
+<?php
+
+$item = new TItem('persona');
+$arreglo = $item->load($_GET);
+echo $arreglo['nombre'];
+```
+
+De igual forma se pueden acceder a los datos desde el mismo objeto
+
+```php
+<?php
+
+$item = new TItem('persona');
+$arreglo = $item->load($_GET);
+echo $item->nombre;
+```
